@@ -28,7 +28,7 @@ import storm.kafka.trident.TridentKakfkaConfig;
 import storm.kafka.trident.TransactionalTridentKafkaSpout;
 
 import catch_em_all.KafkaJson;
-import catch_em_all.AnimalSplit;
+import catch_em_all.SplitAnimals;
 import catch_em_all.ListAnimals;
 
 import java.util.*;
@@ -73,4 +73,3 @@ public class TridentCatchEmAll {
     }
   }
 }
-
