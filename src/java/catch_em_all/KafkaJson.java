@@ -8,12 +8,12 @@ import java.util.*;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
 
-import com.fasterxml.jackson.databing.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class KafkaJson implements Scheme {
-  public Map<String,Object> deserialize(byte[] bytes) {
+  public List<Object> deserialize(byte[] bytes) {
     try {
-      return new values(new ObjectMappter().readValues(new String(bytes, "UTF-8"), HashMap.class);
+      return new Values(new ObjectMapper().readValue(new String(bytes, "UTF-8"), HashMap.class));
     } catch (UnsupportedEncodingException e) {
       throw new RuntimeException(e);
     } catch (IOException e) {

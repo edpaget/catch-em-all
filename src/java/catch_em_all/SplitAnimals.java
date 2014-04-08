@@ -10,11 +10,11 @@ import java.util.*;
 public class SplitAnimals extends BaseFunction {
   public void execute(TridentTuple tuple, TridentCollector collector) {
     Map<String,Object> classification = (Map<String,Object>) tuple.getValueByField("classification");
-    List<Map<String, String>> annotations = List<Map<String, String>> classification.get("annotations");
+    List<Map<String,String>> annotations = (List<Map<String,String>>) classification.get("annotations");
     String user_id = (String) classification.get("user_id");
 
     for(Map<String,String> annotation : annotations) {
-      collector.emit(new Values(annotation.get("species"), user_id);
+      collector.emit(new Values(annotation.get("species"), user_id));
     }
   }
 }
