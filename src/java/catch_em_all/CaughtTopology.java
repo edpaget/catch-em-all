@@ -44,9 +44,9 @@ public class CaughtTopology {
     TridentState seenAnimals = topology.newStream("user-classifications", kafkaSpout)
       .shuffle()
       .each(new Fields("classification"), new FilterSerengeti())
-      .each(new Fields("classification"), new SplitAnimals(), new Fields("animal", "user"))
-      .groupBy(new Fields("user"))
-      .persistentAggregate(new MemoryMapState.Factory(), new ListAnimals(), new Fields("animals"));
+      .each(new Fields("classification"), new SplitAnimals(), new Fields("animal", "user_id"))
+      .groupBy(new Fields("user_id"))
+      .persistentAggregate(new MemoryMapState.Factory(), new Fields("animal", "user_id"), new ListAnimals(), new Fields("animals"));
 
     topology.newDRPCStream("animals", drpc)
       .stateQuery(seenAnimals, new Fields("args"), new MapGet(), new Fields("animals"));
@@ -59,10 +59,12 @@ public class CaughtTopology {
     conf.setMaxSpoutPending(500);
     LocalCluster cluster = new LocalCluster();
     LocalDRPC drpc = new LocalDRPC();
-    CaughtTopology topology = new CaughtTopology("33.33.33.10:2181");
+    CaughtTopology topology = new CaughtTopology("172.17.0.3:2181");
     cluster.submitTopology("catch-em-all", conf, topology.build(drpc));
     while (true) {
-      System.out.println("edpaget classified: " + drpc.execute("animals", "user_id"));
+      System.out.println("edpaget classified: " + drpc.execute("animals", "5022cce4ba40af3c6d00001c"));
+      System.out.println("edpaget classified: " + drpc.execute("animals", "50c77b779177d02fdb000004"));
+      System.out.println("edpaget classified: " + drpc.execute("animals", "logged_out"));
       Utils.sleep(1000);
     }
   }

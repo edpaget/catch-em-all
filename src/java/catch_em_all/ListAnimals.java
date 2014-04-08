@@ -11,6 +11,8 @@ public class ListAnimals implements ReducerAggregator<Set<String>> {
   }
 
   public Set<String> reduce(Set<String> curr, TridentTuple t) {
+    System.err.println(curr);
+    System.err.println(t);
     curr.add(t.getStringByField("animal"));
     return curr;
   }

@@ -9,6 +9,7 @@ import java.util.*;
 public class FilterSerengeti extends BaseFilter {
   public boolean isKeep(TridentTuple t) {
     Map<String,Object> classification = (Map<String,Object>) t.getValueByField("classification");
-    return classification.get("project") == "serengeti";
+    String project = (String) classification.get("project");
+    return project.equals("serengeti");
   }
 }

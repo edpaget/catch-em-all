@@ -14,7 +14,14 @@ public class SplitAnimals extends BaseFunction {
     String user_id = (String) classification.get("user_id");
 
     for(Map<String,String> annotation : annotations) {
-      collector.emit(new Values(annotation.get("species"), user_id));
+      String species = annotation.get("species");
+      if (species != null) {
+        if (user_id == null) {
+          collector.emit(new Values(species, "logged_out"));
+        } else {
+          collector.emit(new Values(species, user_id));
+        }
+      }
     }
   }
 }
